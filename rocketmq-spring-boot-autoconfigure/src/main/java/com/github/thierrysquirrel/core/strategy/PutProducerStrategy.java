@@ -39,7 +39,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * Description:
  * date: 2019/5/3 18:37
  *
- * @author Thierry
+ * @author ThierrySquirrel
  * @since JDK 1.8
  */
 public class PutProducerStrategy {

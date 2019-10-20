@@ -28,7 +28,7 @@ import java.util.Map;
  * Description:
  * date: 2019/5/3 11:44
  *
- * @author Thierry
+ * @author ThierrySquirrel
  * @since JDK 1.8
  */
 public class AnnotatedMethodsUtils {
