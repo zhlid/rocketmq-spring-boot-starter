@@ -21,6 +21,7 @@ import lombok.Data;
 import org.springframework.context.ApplicationContext;
 
 import java.util.Map;
+import java.util.OptionalLong;
 
 /**
  * ClassName: AbstractSendMessageThread
@@ -32,13 +33,15 @@ import java.util.Map;
  */
 @Data
 public abstract class AbstractSendMessageThread implements Runnable {
+	private OptionalLong startDeliverTime;
 	private Map<String, Object> consumerContainer;
 	private RocketMessage rocketMessage;
 	private Object message;
 	private byte[] bytes;
 	private ApplicationContext applicationContext;
 
-	public AbstractSendMessageThread(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
+	public AbstractSendMessageThread(OptionalLong startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
+		this.startDeliverTime = startDeliverTime;
 		this.consumerContainer = consumerContainer;
 		this.rocketMessage = rocketMessage;
 		this.message = message;
@@ -49,17 +52,18 @@ public abstract class AbstractSendMessageThread implements Runnable {
 	/**
 	 * 开始发送消息
 	 *
+	 * @param startDeliverTime   startDeliverTime
 	 * @param consumerContainer  consumerContainer
 	 * @param rocketMessage      rocketMessage
 	 * @param message            message
 	 * @param bytes              bytes
 	 * @param applicationContext applicationContext
 	 */
-	protected abstract void statsSendMessage(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext);
+	protected abstract void statsSendMessage(OptionalLong startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext);
 
 	@Override
 	public void run() {
-		statsSendMessage(consumerContainer,
+		statsSendMessage(startDeliverTime, consumerContainer,
 				rocketMessage,
 				message,
 				bytes,

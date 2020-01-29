@@ -38,7 +38,7 @@ public abstract class AbstractRocketListener {
 	}
 
 	public void printErrorLog() {
-		log.error("消费者代理失败！bean:{},method:{}",
+		log.error("Consumer agent failed！bean:{},method:{}",
 				methodFactoryExecution.getBean(),
 				methodFactoryExecution.getMethod());
 	}

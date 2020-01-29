@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
 import java.util.Map;
+import java.util.OptionalLong;
 
 
 /**
@@ -39,13 +40,13 @@ import java.util.Map;
 public class SendMessageFactoryExecution extends AbstractSendMessageThread {
 
 
-	public SendMessageFactoryExecution(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
-		super(consumerContainer, rocketMessage, message, bytes, applicationContext);
+	public SendMessageFactoryExecution(OptionalLong startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
+		super(startDeliverTime,consumerContainer, rocketMessage, message, bytes, applicationContext);
 	}
 
 	/**
 	 * 开始发送消息
-	 *
+	 * @param startDeliverTime   startDeliverTime
 	 * @param consumerContainer  consumerContainer
 	 * @param rocketMessage      rocketMessage
 	 * @param message            message
@@ -53,9 +54,9 @@ public class SendMessageFactoryExecution extends AbstractSendMessageThread {
 	 * @param applicationContext applicationContext
 	 */
 	@Override
-	protected void statsSendMessage(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
+	protected void statsSendMessage(OptionalLong startDeliverTime,Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
 		try {
-			ProducerStrategy.statsSendMessage(consumerContainer, rocketMessage, message, bytes, applicationContext);
+			ProducerStrategy.statsSendMessage(startDeliverTime,consumerContainer, rocketMessage, message, bytes, applicationContext);
 		} catch (RocketException e) {
 			log.error("statsSendMessage Error", e);
 		}

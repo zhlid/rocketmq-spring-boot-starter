@@ -21,7 +21,6 @@ import com.github.thierrysquirrel.core.producer.DefaultSendCallback;
 import com.github.thierrysquirrel.core.producer.MessageSendType;
 
 import java.lang.annotation.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * ClassName: CommonMessage
@@ -51,22 +50,6 @@ public @interface CommonMessage {
 	 * @return String
 	 */
 	String tag() default "*";
-
-	/**
-	 * 重点：配合时间单位投递
-	 * 定时消息，单位毫秒（ms），在指定时间戳（当前时间之后）进行投递，例如 2016-03-07 16:21:00 投递。如果被设置成当前时间戳之前的某个时刻，消息将立刻投递给消费者。
-	 * 延时消息，单位毫秒（ms），在指定延迟时间（当前时间之后）进行投递，例如消息在 3 秒后投递
-	 *
-	 * @return long
-	 */
-	long startDeliverTime() default 0;
-
-	/**
-	 * 时间单位  默认秒
-	 *
-	 * @return TimeUnit
-	 */
-	TimeUnit timeUnit() default TimeUnit.SECONDS;
 
 	/**
 	 * 消息发送类型 默认异步

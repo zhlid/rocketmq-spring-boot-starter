@@ -23,7 +23,6 @@ import com.github.thierrysquirrel.annotation.CommonMessage;
 import com.github.thierrysquirrel.annotation.OrderMessage;
 import com.github.thierrysquirrel.annotation.RocketMessage;
 import com.github.thierrysquirrel.annotation.TransactionMessage;
-import com.github.thierrysquirrel.error.RocketException;
 
 import java.util.Map;
 
@@ -57,17 +56,17 @@ public class ProducerConsumerFactory {
 				transactionMessage.tag();
 	}
 
-	public static Producer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, CommonMessage commonMessage) throws RocketException {
+	public static Producer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, CommonMessage commonMessage){
 		String producerConsumerKey = ProducerConsumerFactory.getProducerConsumerKey(rocketMessage, commonMessage);
 		return (Producer) consumerContainer.get(producerConsumerKey);
 	}
 
-	public static OrderProducer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, OrderMessage orderMessage) throws RocketException {
+	public static OrderProducer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, OrderMessage orderMessage){
 		String producerConsumerKey = ProducerConsumerFactory.getProducerConsumerKey(rocketMessage, orderMessage);
 		return (OrderProducer) consumerContainer.get(producerConsumerKey);
 	}
 
-	public static TransactionProducer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, TransactionMessage transactionMessage) throws RocketException {
+	public static TransactionProducer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, TransactionMessage transactionMessage){
 		String producerConsumerKey = ProducerConsumerFactory.getProducerConsumerKey(rocketMessage, transactionMessage);
 		return (TransactionProducer) consumerContainer.get(producerConsumerKey);
 	}

@@ -47,7 +47,7 @@ public class DefaultLocalTransactionChecker implements LocalTransactionChecker {
 	 */
 	@Override
 	public TransactionStatus check(Message msg) {
-		log.info(">>>> 回查本地事务 message:{}>>>>", msg);
+		log.info(">>>> Review local transactions message:{}>>>>", msg);
 		return transactionStatus;
 	}
 }

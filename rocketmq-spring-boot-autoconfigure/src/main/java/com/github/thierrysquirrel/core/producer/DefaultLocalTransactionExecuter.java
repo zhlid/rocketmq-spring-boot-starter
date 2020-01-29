@@ -40,7 +40,7 @@ public class DefaultLocalTransactionExecuter implements LocalTransactionExecuter
 	 */
 	@Override
 	public TransactionStatus execute(Message msg, Object arg) {
-		log.info(">>>> 执行本地事务 message:{}>>>>", msg);
+		log.info(">>>> Execute local transaction message:{}>>>>", msg);
 		return TransactionStatus.CommitTransaction;
 	}
 }

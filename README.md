@@ -40,7 +40,7 @@ To achieve the purpose of delay or timing.
         <dependency>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
             <groupId>com.github.thierrysquirrel</groupId>
-            <version>2.0.9-RELEASE</version>
+            <version>2.1.0-RELEASE</version>
         </dependency>
 ```
  ### configuration file
@@ -116,9 +116,10 @@ public class Transaction {
 @RestController
 @RocketMessage(groupID = "GID_delayed")
 public class Delayed {
+    //startDeliverTime is the time stamp, which cannot be less than the current time
     @GetMapping("/delayed")
-    @CommonMessage(topic = "delayed", tag = "delayed",startDeliverTime = 10)
-    public String delayed() {
+    @CommonMessage(topic = "delayed", tag = "delayed")
+    public String delayed(@StartDeliverTime @RequestParam("startDeliverTime") long startDeliverTime) {
         return "delayed";
     }
 }

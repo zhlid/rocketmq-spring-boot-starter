@@ -44,6 +44,7 @@ public class RocketConsumerContainer implements ApplicationContextAware {
 	private ApplicationContext applicationContext;
 	private RocketProperties rocketProperties;
 	private RocketSerializer mqSerializer;
+
 	public RocketConsumerContainer(RocketProperties rocketProperties, RocketSerializer rocketSerializer) {
 		this.rocketProperties = rocketProperties;
 		this.mqSerializer = rocketSerializer;
@@ -56,7 +57,6 @@ public class RocketConsumerContainer implements ApplicationContextAware {
 		ThreadPoolExecutor threadPoolExecutor = ThreadPoolFactory.createConsumeThreadPoolExecutor(rocketProperties);
 
 		applicationContext.getBeansWithAnnotation(RocketListener.class).forEach((beanName, bean) -> {
-
 			RocketListener rocketListener = bean.getClass().getAnnotation(RocketListener.class);
 			AnnotatedMethodsUtils.getMethodAndAnnotation(bean, MessageListener.class).
 					forEach((method, consumerListener) -> {
@@ -65,6 +65,8 @@ public class RocketConsumerContainer implements ApplicationContextAware {
 						ThreadPoolExecutorExecution.statsThread(threadPoolExecutor, consumerFactoryExecution);
 					});
 		});
+
+		threadPoolExecutor.shutdown();
 	}
 
 	@Override

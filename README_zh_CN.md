@@ -39,7 +39,7 @@
         <dependency>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
             <groupId>com.github.thierrysquirrel</groupId>
-            <version>2.0.9-RELEASE</version>
+            <version>2.1.0-RELEASE</version>
         </dependency>
 ```
  ### 配置文件
@@ -114,9 +114,10 @@ public class Transaction {
 @RestController
 @RocketMessage(groupID = "GID_delayed")
 public class Delayed {
+    //startDeliverTime是时间戳,不能小于当前时间
     @GetMapping("/delayed")
-    @CommonMessage(topic = "delayed", tag = "delayed",startDeliverTime = 10)
-    public String delayed() {
+    @CommonMessage(topic = "delayed", tag = "delayed")
+    public String delayed(@StartDeliverTime @RequestParam("startDeliverTime") long startDeliverTime) {
         return "delayed";
     }
 }

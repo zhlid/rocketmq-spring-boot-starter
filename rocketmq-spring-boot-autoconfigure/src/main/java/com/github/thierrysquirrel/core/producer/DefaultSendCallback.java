@@ -38,7 +38,7 @@ public class DefaultSendCallback implements SendCallback {
 	 */
 	@Override
 	public void onSuccess(SendResult sendResult) {
-		log.info("发送消息成功sendResult{}", sendResult);
+		log.info("Message sent successfully sendResult{}", sendResult);
 	}
 
 	/**
@@ -48,6 +48,6 @@ public class DefaultSendCallback implements SendCallback {
 	 */
 	@Override
 	public void onException(OnExceptionContext context) {
-		log.error("发送消息失败context{}", context);
+		log.error("Failed to send message context{}", context);
 	}
 }

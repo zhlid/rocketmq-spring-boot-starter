@@ -20,13 +20,11 @@ import com.github.thierrysquirrel.annotation.RocketMessage;
 import com.github.thierrysquirrel.core.factory.execution.SendMessageFactoryExecution;
 import com.github.thierrysquirrel.core.factory.execution.ThreadPoolExecutorExecution;
 import com.github.thierrysquirrel.core.serializer.RocketSerializer;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.OptionalLong;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -38,21 +36,14 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @since JDK 1.8
  */
 public class InterceptRocket {
-    private InterceptRocket() {
-    }
+	private InterceptRocket() {
+	}
 
-    public static <T extends Annotation> Object intercept(ProceedingJoinPoint proceedingJoinPoint, Map<String, Object> consumerContainer, ThreadPoolExecutor threadPoolExecutor, Class<T> annotationClass, ApplicationContext applicationContext) throws Throwable {
-        MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature ();
-        Method method = signature.getMethod ();
+	public static <T extends Annotation> Object intercept(OptionalLong startDeliverTime, RocketMessage rocketMessage, T annotation, Object proceed, Map<String, Object> consumerContainer, ThreadPoolExecutor threadPoolExecutor, ApplicationContext applicationContext) {
+		RocketSerializer mqSerializer = applicationContext.getBean(RocketSerializer.class);
+		byte[] body = mqSerializer.serialize(proceed);
 
-        T annotation = method.getAnnotation (annotationClass);
-        Object proceed = proceedingJoinPoint.proceed ();
-
-        RocketSerializer mqSerializer = applicationContext.getBean (RocketSerializer.class);
-        byte[] body = mqSerializer.serialize (proceed);
-
-        RocketMessage rocketMessage = method.getDeclaringClass ().getAnnotation (RocketMessage.class);
-        ThreadPoolExecutorExecution.statsThread (threadPoolExecutor, new SendMessageFactoryExecution (consumerContainer, rocketMessage, annotation, body, applicationContext));
-        return proceed;
-    }
+		ThreadPoolExecutorExecution.statsThread(threadPoolExecutor, new SendMessageFactoryExecution(startDeliverTime,consumerContainer, rocketMessage, annotation, body, applicationContext));
+		return proceed;
+	}
 }

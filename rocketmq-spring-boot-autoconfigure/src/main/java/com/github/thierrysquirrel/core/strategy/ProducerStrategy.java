@@ -29,6 +29,7 @@ import com.github.thierrysquirrel.error.RocketException;
 import org.springframework.context.ApplicationContext;
 
 import java.util.Map;
+import java.util.OptionalLong;
 
 /**
  * ClassName: ProducerStrategy
@@ -42,11 +43,11 @@ public class ProducerStrategy {
 	private ProducerStrategy() {
 	}
 
-	public static void statsSendMessage(Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContex) throws RocketException {
+	public static void statsSendMessage(OptionalLong startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContex) throws RocketException {
 		if (message instanceof CommonMessage) {
 			CommonMessage commonMessage = (CommonMessage) message;
 			Producer producer = ProducerConsumerFactory.getProducer(consumerContainer, rocketMessage, commonMessage);
-			SendMessageFactory.sendMessage(producer, commonMessage, bytes, applicationContex);
+			SendMessageFactory.sendMessage(startDeliverTime,producer, commonMessage, bytes, applicationContex);
 			return;
 		}
 		if (message instanceof OrderMessage) {

@@ -27,6 +27,8 @@ import com.github.thierrysquirrel.core.strategy.SendMessageStrategy;
 import com.github.thierrysquirrel.core.utils.ApplicationContextUtils;
 import org.springframework.context.ApplicationContext;
 
+import java.util.OptionalLong;
+
 /**
  * ClassName: SendMessageFactory
  * Description:
@@ -39,10 +41,9 @@ public class SendMessageFactory {
 	private SendMessageFactory() {
 	}
 
-	public static void sendMessage(Producer producer, CommonMessage commonMessage, byte[] bytes, ApplicationContext applicationContext) {
+	public static void sendMessage(OptionalLong startDeliverTime, Producer producer, CommonMessage commonMessage, byte[] bytes, ApplicationContext applicationContext) {
 		Message message = MessageFactory.createMessage(commonMessage, bytes);
-		long startDeliverTime = commonMessage.timeUnit().toMillis(commonMessage.startDeliverTime());
-		message.setStartDeliverTime(System.currentTimeMillis() + startDeliverTime);
+		startDeliverTime.ifPresent(message::setStartDeliverTime);
 		SendMessageStrategy.send(commonMessage, producer, message, applicationContext);
 
 	}

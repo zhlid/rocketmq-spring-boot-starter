@@ -49,6 +49,7 @@ public class RocketProducerContainer implements ApplicationContextAware {
 	public void initialize() {
 		ThreadPoolExecutor threadPoolExecutor = ThreadPoolFactory.createProducerThreadPoolExecutor(rocketProperties);
 		applicationContext.getBeansWithAnnotation(RocketMessage.class).forEach((beanName, bean) -> RocketConsumerStrategy.putProducer(threadPoolExecutor, consumerContainer, bean, rocketProperties, applicationContext));
+		threadPoolExecutor.shutdown();
 	}
 
 
