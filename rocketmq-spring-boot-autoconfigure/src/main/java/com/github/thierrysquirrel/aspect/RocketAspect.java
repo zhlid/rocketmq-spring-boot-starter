@@ -34,6 +34,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -112,7 +113,7 @@ public class RocketAspect implements ApplicationContextAware {
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
+	public void setApplicationContext(@Nonnull ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
 }

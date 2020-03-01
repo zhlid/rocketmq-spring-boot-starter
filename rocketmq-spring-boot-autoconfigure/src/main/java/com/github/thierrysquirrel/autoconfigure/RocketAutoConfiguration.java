@@ -22,6 +22,7 @@ import com.github.thierrysquirrel.container.RocketConsumerContainer;
 import com.github.thierrysquirrel.container.RocketProducerContainer;
 import com.github.thierrysquirrel.core.serializer.ProtoBufSerializer;
 import com.github.thierrysquirrel.core.serializer.RocketSerializer;
+import com.google.common.collect.Maps;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,7 +31,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -67,7 +67,7 @@ public class RocketAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(Map.class)
     public Map<String, Object> consumerContainer() {
-        return new ConcurrentHashMap<> (16);
+        return Maps.newConcurrentMap ();
     }
 
     @Bean

@@ -32,16 +32,16 @@ import java.util.OptionalLong;
  */
 public class StartDeliverTimeFactory {
 
-	private StartDeliverTimeFactory() {
-	}
+    private StartDeliverTimeFactory() {
+    }
 
-	public static OptionalLong getStartDeliverTime(Object[] args, Parameter[] params) {
-		for (int i = 0; i < args.length; i++) {
-			StartDeliverTime annotation = params[i].getAnnotation(StartDeliverTime.class);
-			if (ObjectIsEmptyUtils.isNotEmpty(annotation)) {
-				return OptionalLong.of((Long) args[i]);
-			}
-		}
-		return OptionalLong.empty();
-	}
+    public static Long getStartDeliverTime(Object[] args, Parameter[] params) {
+        for (int i = 0; i < args.length; i++) {
+            StartDeliverTime annotation = params[i].getAnnotation (StartDeliverTime.class);
+            if (ObjectIsEmptyUtils.isNotEmpty (annotation)) {
+                return (Long) args[i];
+            }
+        }
+        return null;
+    }
 }

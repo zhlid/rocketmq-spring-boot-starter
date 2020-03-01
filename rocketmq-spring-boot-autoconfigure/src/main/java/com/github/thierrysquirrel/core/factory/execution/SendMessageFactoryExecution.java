@@ -40,7 +40,7 @@ import java.util.OptionalLong;
 public class SendMessageFactoryExecution extends AbstractSendMessageThread {
 
 
-	public SendMessageFactoryExecution(OptionalLong startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
+	public SendMessageFactoryExecution(Long startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
 		super(startDeliverTime,consumerContainer, rocketMessage, message, bytes, applicationContext);
 	}
 
@@ -54,7 +54,7 @@ public class SendMessageFactoryExecution extends AbstractSendMessageThread {
 	 * @param applicationContext applicationContext
 	 */
 	@Override
-	protected void statsSendMessage(OptionalLong startDeliverTime,Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
+	protected void statsSendMessage(Long startDeliverTime,Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
 		try {
 			ProducerStrategy.statsSendMessage(startDeliverTime,consumerContainer, rocketMessage, message, bytes, applicationContext);
 		} catch (RocketException e) {

@@ -33,14 +33,14 @@ import java.util.OptionalLong;
  */
 @Data
 public abstract class AbstractSendMessageThread implements Runnable {
-	private OptionalLong startDeliverTime;
+	private Long startDeliverTime;
 	private Map<String, Object> consumerContainer;
 	private RocketMessage rocketMessage;
 	private Object message;
 	private byte[] bytes;
 	private ApplicationContext applicationContext;
 
-	public AbstractSendMessageThread(OptionalLong startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
+	public AbstractSendMessageThread(Long startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext) {
 		this.startDeliverTime = startDeliverTime;
 		this.consumerContainer = consumerContainer;
 		this.rocketMessage = rocketMessage;
@@ -59,7 +59,7 @@ public abstract class AbstractSendMessageThread implements Runnable {
 	 * @param bytes              bytes
 	 * @param applicationContext applicationContext
 	 */
-	protected abstract void statsSendMessage(OptionalLong startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext);
+	protected abstract void statsSendMessage(Long startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContext);
 
 	@Override
 	public void run() {

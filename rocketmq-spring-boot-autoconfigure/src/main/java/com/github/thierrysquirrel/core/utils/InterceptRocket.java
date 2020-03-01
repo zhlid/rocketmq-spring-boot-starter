@@ -39,7 +39,7 @@ public class InterceptRocket {
 	private InterceptRocket() {
 	}
 
-	public static <T extends Annotation> Object intercept(OptionalLong startDeliverTime, RocketMessage rocketMessage, T annotation, Object proceed, Map<String, Object> consumerContainer, ThreadPoolExecutor threadPoolExecutor, ApplicationContext applicationContext) {
+	public static <T extends Annotation> Object intercept(Long startDeliverTime, RocketMessage rocketMessage, T annotation, Object proceed, Map<String, Object> consumerContainer, ThreadPoolExecutor threadPoolExecutor, ApplicationContext applicationContext) {
 		RocketSerializer mqSerializer = applicationContext.getBean(RocketSerializer.class);
 		byte[] body = mqSerializer.serialize(proceed);
 

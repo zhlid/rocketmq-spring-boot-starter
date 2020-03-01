@@ -43,7 +43,7 @@ public class ProducerStrategy {
 	private ProducerStrategy() {
 	}
 
-	public static void statsSendMessage(OptionalLong startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContex) throws RocketException {
+	public static void statsSendMessage(Long startDeliverTime, Map<String, Object> consumerContainer, RocketMessage rocketMessage, Object message, byte[] bytes, ApplicationContext applicationContex) throws RocketException {
 		if (message instanceof CommonMessage) {
 			CommonMessage commonMessage = (CommonMessage) message;
 			Producer producer = ProducerConsumerFactory.getProducer(consumerContainer, rocketMessage, commonMessage);

@@ -23,6 +23,7 @@ import com.github.thierrysquirrel.core.strategy.RocketConsumerStrategy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -54,7 +55,7 @@ public class RocketProducerContainer implements ApplicationContextAware {
 
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
+	public void setApplicationContext(@Nonnull ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
 }

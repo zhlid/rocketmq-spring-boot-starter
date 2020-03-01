@@ -38,24 +38,26 @@ import java.util.OptionalLong;
  * @since JDK 1.8
  */
 public class SendMessageFactory {
-	private SendMessageFactory() {
-	}
+    private SendMessageFactory() {
+    }
 
-	public static void sendMessage(OptionalLong startDeliverTime, Producer producer, CommonMessage commonMessage, byte[] bytes, ApplicationContext applicationContext) {
-		Message message = MessageFactory.createMessage(commonMessage, bytes);
-		startDeliverTime.ifPresent(message::setStartDeliverTime);
-		SendMessageStrategy.send(commonMessage, producer, message, applicationContext);
+    public static void sendMessage(Long startDeliverTime, Producer producer, CommonMessage commonMessage, byte[] bytes, ApplicationContext applicationContext) {
+        Message message = MessageFactory.createMessage (commonMessage, bytes);
+        if (null != startDeliverTime) {
+            message.setStartDeliverTime (startDeliverTime);
+        }
+        SendMessageStrategy.send (commonMessage, producer, message, applicationContext);
 
-	}
+    }
 
-	public static void sendMessage(OrderProducer orderProducer, OrderMessage orderMessage, byte[] bytes) {
-		Message message = MessageFactory.createMessage(orderMessage, bytes);
-		orderProducer.send(message, orderMessage.shardingKey());
+    public static void sendMessage(OrderProducer orderProducer, OrderMessage orderMessage, byte[] bytes) {
+        Message message = MessageFactory.createMessage (orderMessage, bytes);
+        orderProducer.send (message, orderMessage.shardingKey ());
 
-	}
+    }
 
-	public static void sendMessage(TransactionProducer transactionProducer, TransactionMessage transactionMessage, byte[] bytes, ApplicationContext applicationContext) {
-		Message message = MessageFactory.createMessage(transactionMessage, bytes);
-		transactionProducer.send(message, ApplicationContextUtils.getLocalTransactionExecuter(applicationContext, transactionMessage.executer()), null);
-	}
+    public static void sendMessage(TransactionProducer transactionProducer, TransactionMessage transactionMessage, byte[] bytes, ApplicationContext applicationContext) {
+        Message message = MessageFactory.createMessage (transactionMessage, bytes);
+        transactionProducer.send (message, ApplicationContextUtils.getLocalTransactionExecuter (applicationContext, transactionMessage.executer ()), null);
+    }
 }
