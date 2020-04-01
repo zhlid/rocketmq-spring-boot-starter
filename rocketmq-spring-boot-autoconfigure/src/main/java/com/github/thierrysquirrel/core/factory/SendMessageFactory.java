@@ -27,7 +27,6 @@ import com.github.thierrysquirrel.core.strategy.SendMessageStrategy;
 import com.github.thierrysquirrel.core.utils.ApplicationContextUtils;
 import org.springframework.context.ApplicationContext;
 
-import java.util.OptionalLong;
 
 /**
  * ClassName: SendMessageFactory
