@@ -39,7 +39,7 @@
         <dependency>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
             <groupId>com.github.thierrysquirrel</groupId>
-            <version>2.1.3-RELEASE</version>
+            <version>2.1.4-RELEASE</version>
         </dependency>
 ```
  ### 配置文件
