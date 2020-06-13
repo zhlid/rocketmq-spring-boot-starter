@@ -30,6 +30,8 @@ import org.springframework.context.ApplicationContextAware;
 
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -42,36 +44,36 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 
 public class RocketConsumerContainer implements ApplicationContextAware {
-	private ApplicationContext applicationContext;
-	private RocketProperties rocketProperties;
-	private RocketSerializer mqSerializer;
+    private ApplicationContext applicationContext;
+    private RocketProperties rocketProperties;
+    private RocketSerializer mqSerializer;
 
-	public RocketConsumerContainer(RocketProperties rocketProperties, RocketSerializer rocketSerializer) {
-		this.rocketProperties = rocketProperties;
-		this.mqSerializer = rocketSerializer;
-	}
+    public RocketConsumerContainer(RocketProperties rocketProperties, RocketSerializer rocketSerializer) {
+        this.rocketProperties = rocketProperties;
+        this.mqSerializer = rocketSerializer;
+    }
 
-	@PostConstruct
-	public void initialize() {
+    @PostConstruct
+    public void initialize() {
 
 
-		ThreadPoolExecutor threadPoolExecutor = ThreadPoolFactory.createConsumeThreadPoolExecutor(rocketProperties);
+        ThreadPoolExecutor threadPoolExecutor = ThreadPoolFactory.createConsumeThreadPoolExecutor (rocketProperties);
 
-		applicationContext.getBeansWithAnnotation(RocketListener.class).forEach((beanName, bean) -> {
-			RocketListener rocketListener = bean.getClass().getAnnotation(RocketListener.class);
-			AnnotatedMethodsUtils.getMethodAndAnnotation(bean, MessageListener.class).
-					forEach((method, consumerListener) -> {
-						ConsumerFactoryExecution consumerFactoryExecution = new ConsumerFactoryExecution(rocketProperties,
-								rocketListener, consumerListener, new MethodFactoryExecution(bean, method, mqSerializer));
-						ThreadPoolExecutorExecution.statsThread(threadPoolExecutor, consumerFactoryExecution);
-					});
-		});
+        applicationContext.getBeansWithAnnotation (RocketListener.class).forEach ((beanName, bean) -> {
+            RocketListener rocketListener = bean.getClass ().getAnnotation (RocketListener.class);
+            AnnotatedMethodsUtils.getMethodAndAnnotation (bean, MessageListener.class).
+                    forEach ((method, consumerListener) -> {
+                        ConsumerFactoryExecution consumerFactoryExecution = new ConsumerFactoryExecution (rocketProperties,
+                                rocketListener, consumerListener, new MethodFactoryExecution (bean, method, mqSerializer));
+                        ThreadPoolExecutorExecution.statsThread (threadPoolExecutor, consumerFactoryExecution);
+                    });
+        });
 
-		threadPoolExecutor.shutdown();
-	}
+        threadPoolExecutor.shutdown ();
+    }
 
-	@Override
-	public void setApplicationContext(@Nonnull ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
+    @Override
+    public void setApplicationContext(@Nonnull ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 }
