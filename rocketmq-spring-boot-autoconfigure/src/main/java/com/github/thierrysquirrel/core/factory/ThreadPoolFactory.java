@@ -80,7 +80,7 @@ public class ThreadPoolFactory {
 				threadNums,
 				0,
 				TimeUnit.SECONDS,
-				new LinkedBlockingQueue<>(4096),
+				new LinkedBlockingQueue<>(),
 				threadFactory,
 				new ThreadPoolExecutor.AbortPolicy()
 		);
@@ -96,7 +96,7 @@ public class ThreadPoolFactory {
 				threadNums,
 				0,
 				TimeUnit.SECONDS,
-				new LinkedBlockingQueue<>(4096),
+				new LinkedBlockingQueue<>(),
 				threadFactory,
 				new ThreadPoolExecutor.AbortPolicy()
 		);
