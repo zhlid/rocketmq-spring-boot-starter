@@ -18,10 +18,12 @@ package com.github.thierrysquirrel.core.factory.execution;
 
 import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
+import com.aliyun.openservices.ons.api.batch.BatchConsumer;
 import com.aliyun.openservices.ons.api.order.OrderConsumer;
 import com.github.thierrysquirrel.annotation.MessageListener;
 import com.github.thierrysquirrel.annotation.RocketListener;
 import com.github.thierrysquirrel.autoconfigure.RocketProperties;
+import com.github.thierrysquirrel.core.consumer.DefaultBatchMessageListener;
 import com.github.thierrysquirrel.core.consumer.DefaultMessageListener;
 import com.github.thierrysquirrel.core.consumer.DefaultMessageOrderListener;
 import com.github.thierrysquirrel.core.factory.ConsumerFactory;
@@ -59,11 +61,16 @@ public class ConsumerFactoryExecution extends AbstractConsumerThread {
 			orderConsumer.start();
 			return;
 		}
+		if (consumerListener.batchConsumer()) {
+			properties.put(PropertyKeyConst.ConsumeMessageBatchMaxSize, consumerListener.consumeMessageBatchMaxSize());
+			properties.put(PropertyKeyConst.BatchConsumeMaxAwaitDurationInSeconds, consumerListener.batchConsumeMaxAwaitDurationInSeconds());
+			BatchConsumer batchConsumer = ConsumerFactory.createBatchConsumer(properties);
+			batchConsumer.subscribe(consumerListener.topic(), consumerListener.tag(), new DefaultBatchMessageListener(methodFactoryExecution));
+			batchConsumer.start();
+		}
 
 		Consumer consumer = ConsumerFactory.createConsumer(properties);
 		consumer.subscribe(consumerListener.topic(), consumerListener.tag(), new DefaultMessageListener(methodFactoryExecution));
 		consumer.start();
-
-
 	}
 }

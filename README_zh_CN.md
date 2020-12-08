@@ -39,7 +39,7 @@
         <dependency>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
             <groupId>com.github.thierrysquirrel</groupId>
-            <version>2.2.0-RELEASE</version>
+            <version>2.2.1-RELEASE</version>
         </dependency>
 ```
  ### 配置文件
@@ -145,6 +145,17 @@ public class Delayed {
 }
 
 ```
+# 批量模式
+```java
+@RocketListener(groupID = "GID_message",batchConsumer = true)
+public class Delayed {
+    @MessageListener(topic = "message",tag = "message", orderConsumer = true)
+    public void delayed(String message) {
+            System.out.println("message");
+    }
+}
+```
+
 # 开发者自定义全局模块
 ## 自定义实现消息发送结果
 ```java

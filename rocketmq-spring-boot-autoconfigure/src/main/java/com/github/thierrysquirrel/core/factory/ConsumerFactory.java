@@ -18,6 +18,7 @@ package com.github.thierrysquirrel.core.factory;
 
 import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.ONSFactory;
+import com.aliyun.openservices.ons.api.batch.BatchConsumer;
 import com.aliyun.openservices.ons.api.order.OrderConsumer;
 
 import java.util.Properties;
@@ -39,7 +40,12 @@ public class ConsumerFactory {
 		return ONSFactory.createConsumer(properties);
 	}
 
+
 	public static OrderConsumer createOrderConsumer(Properties properties) {
 		return ONSFactory.createOrderedConsumer(properties);
+	}
+
+	public static BatchConsumer createBatchConsumer(Properties properties) {
+		return ONSFactory.createBatchConsumer(properties);
 	}
 }

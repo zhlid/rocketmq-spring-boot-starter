@@ -40,7 +40,7 @@ To achieve the purpose of delay or timing.
         <dependency>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
             <groupId>com.github.thierrysquirrel</groupId>
-            <version>2.2.0-RELEASE</version>
+            <version>2.2.1-RELEASE</version>
         </dependency>
 ```
  ### configuration file
@@ -143,6 +143,16 @@ public class Delayed {
     public void delayed(String message) {
             System.out.println("message");
     }
+}
+```
+# Batch Mode
+```java
+@RocketListener(groupID = "GID_message",batchConsumer = true)
+public class Delayed {
+	@MessageListener(topic = "message",tag = "message", orderConsumer = true)
+	public void delayed(String message) {
+		System.out.println("message");
+	}
 }
 ```
 

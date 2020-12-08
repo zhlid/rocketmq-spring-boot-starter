@@ -57,4 +57,21 @@ public @interface MessageListener {
 	 */
 
 	boolean orderConsumer() default false;
+
+	/**
+	 * 是否为批量消息
+	 *
+	 * @return Boolean
+	 */
+	boolean batchConsumer() default false;
+
+	/**
+	 * 设置批量消费最大消息数量,当指定Topic的消息数量已经攒够128条,SDK立即执行回调进行消费.默认值：32,取值范围：1~1024.
+	 */
+	int consumeMessageBatchMaxSize() default 32;
+
+	/**
+	 * 设置批量消费最大等待时长,当等待时间达到10秒,SDK立即执行回调进行消费.默认值：0,取值范围：0~450,单位：秒.
+	 */
+	int batchConsumeMaxAwaitDurationInSeconds() default 0;
 }
