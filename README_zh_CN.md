@@ -4,6 +4,8 @@
 
 [English](./README.md)
 
+[感谢JetBrains软件的帮助](https://jb.gg/OpenSource)
+
 支持功能：
 - [x] 普通消息三种发送方式：同步，异步，单向
 - [x] 订阅消息集群,广播

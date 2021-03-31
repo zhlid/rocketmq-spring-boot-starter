@@ -4,6 +4,8 @@ AliYun RocketMQ Spring Book Edition
 
 [中文](./README_zh_CN.md)
 
+[Thanks for the help from JetBrains software](https://jb.gg/OpenSource)
+
 Support function:
 
 - [x] Three modes of sending ordinary messages: synchronous, asynchronous and one-way
