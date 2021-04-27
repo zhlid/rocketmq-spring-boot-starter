@@ -1,3 +1,19 @@
+/**
+ * Copyright 2019 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.github.thierrysquirrel.core.factory;
 
 import com.aliyun.openservices.ons.api.Producer;
@@ -7,7 +23,6 @@ import com.github.thierrysquirrel.annotation.CommonMessage;
 import com.github.thierrysquirrel.annotation.OrderMessage;
 import com.github.thierrysquirrel.annotation.RocketMessage;
 import com.github.thierrysquirrel.annotation.TransactionMessage;
-import com.github.thierrysquirrel.error.RocketException;
 
 import java.util.Map;
 
@@ -16,10 +31,13 @@ import java.util.Map;
  * Description:
  * date: 2019/5/3 13:45
  *
- * @author Thierry
+ * @author ThierrySquirrel
  * @since JDK 1.8
  */
 public class ProducerConsumerFactory {
+	private ProducerConsumerFactory() {
+	}
+
 	public static String getProducerConsumerKey(RocketMessage rocketMessage, CommonMessage commonMessage) {
 		return rocketMessage.groupID() +
 				commonMessage.topic() +
@@ -38,17 +56,17 @@ public class ProducerConsumerFactory {
 				transactionMessage.tag();
 	}
 
-	public static Producer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, CommonMessage commonMessage) throws RocketException {
+	public static Producer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, CommonMessage commonMessage){
 		String producerConsumerKey = ProducerConsumerFactory.getProducerConsumerKey(rocketMessage, commonMessage);
 		return (Producer) consumerContainer.get(producerConsumerKey);
 	}
 
-	public static OrderProducer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, OrderMessage orderMessage) throws RocketException {
+	public static OrderProducer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, OrderMessage orderMessage){
 		String producerConsumerKey = ProducerConsumerFactory.getProducerConsumerKey(rocketMessage, orderMessage);
 		return (OrderProducer) consumerContainer.get(producerConsumerKey);
 	}
 
-	public static TransactionProducer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, TransactionMessage transactionMessage) throws RocketException {
+	public static TransactionProducer getProducer(Map<String, Object> consumerContainer, RocketMessage rocketMessage, TransactionMessage transactionMessage){
 		String producerConsumerKey = ProducerConsumerFactory.getProducerConsumerKey(rocketMessage, transactionMessage);
 		return (TransactionProducer) consumerContainer.get(producerConsumerKey);
 	}

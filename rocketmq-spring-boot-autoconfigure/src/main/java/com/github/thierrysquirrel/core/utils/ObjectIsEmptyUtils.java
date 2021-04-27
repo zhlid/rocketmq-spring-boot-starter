@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 the original author or authors.
+ * Copyright 2020 the original author or authors.
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,27 @@
  * limitations under the License.
  */
 
-package com.github.thierrysquirrel.annotation;
+package com.github.thierrysquirrel.core.utils;
 
-import com.github.thierrysquirrel.autoconfigure.RocketAutoConfiguration;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.*;
-
+import org.springframework.util.ObjectUtils;
 
 /**
- * ClassName: MessageListener
+ * ClassName: ObjectIsEmptyUtils
  * Description:
- * date: 2019/4/26 16:26
+ * date: 2020/1/29 19:19
  *
  * @author ThierrySquirrel
  * @since JDK 1.8
  */
-@Target({ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
-@Import({RocketAutoConfiguration.class})
-public @interface EnableRocketMQ {
+public class ObjectIsEmptyUtils {
+	private ObjectIsEmptyUtils() {
+	}
 
+	public static boolean isEmpty(Object obj) {
+		return ObjectUtils.isEmpty(obj);
+	}
+
+	public static boolean isNotEmpty(Object obj) {
+		return !isEmpty(obj);
+	}
 }

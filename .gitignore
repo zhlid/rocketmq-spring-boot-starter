@@ -1,5 +1,5 @@
 HELP.md
-/target/
+/**/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -27,3 +27,6 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+### Windows ###
+*.bat
